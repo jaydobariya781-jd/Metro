@@ -60,6 +60,7 @@ class ProfileFragment : Fragment() {
         }
 
         view.findViewById<LinearLayout>(R.id.row_payment_methods)?.setOnClickListener {
+            Toast.makeText(requireContext(), "Opening Daily Pass Purchase...", Toast.LENGTH_SHORT).show()
             startActivity(Intent(requireContext(), DailyPassOtpActivity::class.java))
         }
 
