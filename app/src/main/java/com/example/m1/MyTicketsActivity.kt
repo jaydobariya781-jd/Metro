@@ -37,6 +37,11 @@ class MyTicketsActivity : AppCompatActivity() {
         loadTickets()
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadTickets()
+    }
+
     private fun setupTabs() {
         tabActive.setOnClickListener {
             isHistoryTab = false
