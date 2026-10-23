@@ -349,6 +349,7 @@ class AdminUsersActivity : AppCompatActivity() {
 
             if (isEdit && existingUser != null) {
                 UserManager.updateUser(existingUser.id, name, email, role, status)
+                AdminAuditLog.getInstance(this).logAction("USER_UPDATE", "Updated user: $name ($role, $status)")
                 Toast.makeText(this, "User '$name' updated successfully!", Toast.LENGTH_SHORT).show()
             } else {
                 val newUser = UserModel(
@@ -359,6 +360,7 @@ class AdminUsersActivity : AppCompatActivity() {
                     status = status
                 )
                 UserManager.addUser(newUser)
+                AdminAuditLog.getInstance(this).logAction("USER_CREATE", "Created new user: $name ($role)")
                 Toast.makeText(this, "User '$name' added successfully!", Toast.LENGTH_SHORT).show()
             }
             dialog.dismiss()
@@ -372,6 +374,7 @@ class AdminUsersActivity : AppCompatActivity() {
             .setMessage("Are you sure you want to delete ${user.name} (${user.email})? This action cannot be undone.")
             .setPositiveButton("Delete") { _, _ ->
                 UserManager.deleteUser(user.id)
+                AdminAuditLog.getInstance(this).logAction("USER_DELETE", "Deleted user: ${user.name} (${user.id})")
                 Toast.makeText(this, "User ${user.name} deleted", Toast.LENGTH_SHORT).show()
                 loadUsers()
             }
