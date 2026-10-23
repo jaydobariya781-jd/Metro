@@ -51,7 +51,12 @@ class BookQrTicketActivity : AppCompatActivity() {
 
         // Share button
         findViewById<MaterialButton>(R.id.btn_share_ticket)?.setOnClickListener {
-            Toast.makeText(this, "Sharing ticket ${ticket.ticketId}…", Toast.LENGTH_SHORT).show()
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_SUBJECT, "Metro QR Ticket ${ticket.ticketId}")
+                putExtra(Intent.EXTRA_TEXT, "Scan this QR code at Ahmedabad Metro gates for journey: ${ticket.fromStation} to ${ticket.toStation}")
+            }
+            startActivity(Intent.createChooser(shareIntent, "Share QR Ticket"))
         }
     }
 }
