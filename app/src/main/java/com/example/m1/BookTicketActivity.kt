@@ -120,8 +120,9 @@ class BookTicketActivity : AppCompatActivity() {
 
     private fun updateFare() {
         if (fromStation == toStation) {
-            tvFareAmount.text = "₹10.00"
-            tvDistance?.text = "Same station"
+            val minFare = 5.0 * passengerCount
+            tvFareAmount.text = "₹${"%.2f".format(minFare)}"
+            tvDistance?.text = "Same station (Platform pass)"
             return
         }
         val fare = MetroData.calculateFare(fromStation, toStation, passengerCount)
