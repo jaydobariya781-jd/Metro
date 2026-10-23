@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="300dp"
+    android:height="230dp"
+    android:viewportWidth="300"
+    android:viewportHeight="230">
+    <!-- Simple Train Representation -->
+    <path
+        android:fillColor="#1A56C4"
+        android:pathData="M50,180 h200 v10 h-200 z" />
+    <path
+        android:fillColor="#1A56C4"
+        android:pathData="M70,50 h160 c10,0 20,10 20,20 v110 h-200 v-110 c0,-10 10,-20 20,-20 z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M90,70 h120 v40 h-120 z" />
+</vector>

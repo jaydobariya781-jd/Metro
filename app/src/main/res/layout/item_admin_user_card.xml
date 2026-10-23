@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_user_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="14dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="#FAF2F0">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Avatar -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_user_avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/user_avatar"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+        <!-- User Info -->
+        <LinearLayout
+            android:id="@+id/ll_user_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/iv_user_avatar"
+            android:layout_marginStart="14dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aarav Patel"
+                android:textColor="#0F172A"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:id="@+id/tv_user_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="aarav.patel@Gmail.com"
+                android:textColor="#64748B"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif" />
+        </LinearLayout>
+
+        <!-- Status Indicator (Top Right: Green/Red Dot + Text) -->
+        <LinearLayout
+            android:id="@+id/ll_user_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true">
+
+            <View
+                android:id="@+id/view_status_dot"
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="#16A34A"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:id="@+id/tv_user_status_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Active"
+                android:textColor="#0F172A"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+
+        <!-- Role Badge (Below Avatar: ADMIN or USER) -->
+        <TextView
+            android:id="@+id/tv_user_role_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_user_avatar"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:text="ADMIN"
+            android:textColor="#1D4ED8"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.04"
+            android:background="@drawable/bg_role_admin_pill"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp" />
+
+        <!-- Action Buttons (Bottom Right: Edit + Delete) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/ll_user_text"
+            android:layout_marginTop="10dp">
+
+            <!-- Edit Button -->
+            <ImageView
+                android:id="@+id/btn_edit_user"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_btn_edit_white"
+                android:src="@drawable/ic_pencil_edit"
+                android:contentDescription="Edit user"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="10dp" />
+
+            <!-- Delete Button -->
+            <ImageView
+                android:id="@+id/btn_delete_user"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_btn_delete_pink"
+                android:src="@drawable/ic_trash_delete"
+                android:contentDescription="Delete user"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
