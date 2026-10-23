@@ -87,6 +87,7 @@ class AdminRevenueActivity : AppCompatActivity() {
     private fun setupTransactions() {
         // View All click
         findViewById<TextView>(R.id.tv_revenue_view_all)?.setOnClickListener {
+            AdminAuditLog.getInstance(this).logAction("REVENUE_AUDIT", "Exported financial reconciliation summary")
             Toast.makeText(this, "Showing all 1,240 transactions for today", Toast.LENGTH_SHORT).show()
         }
 
