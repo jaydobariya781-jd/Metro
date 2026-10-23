@@ -68,7 +68,7 @@ class NotificationsActivity : AppCompatActivity() {
 
         // Mark all read
         findViewById<TextView>(R.id.tv_mark_all_read)?.setOnClickListener {
-            Toast.makeText(this, "All notifications marked as read ✓", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "All 4 notifications marked as read ✓", Toast.LENGTH_SHORT).show()
         }
     }
 
