@@ -118,6 +118,12 @@ class AdminSettingsActivity : AppCompatActivity() {
             val status = if (isChecked) "Enabled" else "Disabled"
             Toast.makeText(this, "Dark Mode: $status", Toast.LENGTH_SHORT).show()
         }
+
+        // Long press on mobile input opens Audit Log Viewer
+        etMobile.setOnLongClickListener {
+            startActivity(Intent(this, AdminAuditLogActivity::class.java))
+            true
+        }
     }
 
     private fun setupBottomNav() {
