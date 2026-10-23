@@ -244,7 +244,8 @@ class HelpSupportActivity : AppCompatActivity() {
             .setPositiveButton("Send Message") { _, _ ->
                 val msg = etMessage.text.toString().trim()
                 if (msg.isNotEmpty()) {
-                    Toast.makeText(this, "Message sent to support! Agent Priya will respond shortly.", Toast.LENGTH_LONG).show()
+                    val ticketRef = "TKT-${System.currentTimeMillis() % 100000}"
+                    Toast.makeText(this, "Message sent! Support ticket #$ticketRef created. Agent will respond shortly.", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(this, "Please enter a message to send", Toast.LENGTH_SHORT).show()
                 }
