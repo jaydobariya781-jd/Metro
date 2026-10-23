@@ -219,13 +219,16 @@ class AdminDailyTicketsActivity : AppCompatActivity() {
 
         if (canRefund) {
             builder.setNeutralButton("Cancel & Refund") { _, _ ->
+                AdminAuditLog.getInstance(this).logAction("TICKET_REFUND", "Refunded $fare for $ticketId ($passengerName)")
                 Toast.makeText(this, "Ticket $ticketId cancelled and $fare refunded to passenger", Toast.LENGTH_SHORT).show()
             }
             builder.setPositiveButton("Validate Turnstile") { _, _ ->
+                AdminAuditLog.getInstance(this).logAction("GATE_VALIDATE", "Turnstile pass verified: $ticketId")
                 Toast.makeText(this, "Turnstile entry validated for $passengerName ($ticketId)", Toast.LENGTH_SHORT).show()
             }
         } else {
             builder.setPositiveButton("Verify QR Code") { _, _ ->
+                AdminAuditLog.getInstance(this).logAction("QR_VERIFY", "Ticket QR scanned: $ticketId")
                 Toast.makeText(this, "QR Code $ticketId is valid and verified", Toast.LENGTH_SHORT).show()
             }
         }
