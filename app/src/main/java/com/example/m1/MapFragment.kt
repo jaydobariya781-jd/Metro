@@ -46,7 +46,7 @@ class MapFragment : Fragment() {
         }
 
         view.findViewById<TextView>(R.id.tv_see_all_nearby)?.setOnClickListener {
-            Toast.makeText(requireContext(), "Showing all 22 Ahmedabad Metro stations", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Showing all 32 Ahmedabad Metro stations across Blue & Red lines", Toast.LENGTH_SHORT).show()
         }
 
         view.findViewById<CardView>(R.id.card_search)?.setOnClickListener {
