@@ -59,12 +59,8 @@ class LoginActivity : AppCompatActivity() {
                     etPhone.error = "Phone number is required"
                     etPhone.requestFocus()
                 }
-                phone.length != 10 -> {
-                    etPhone.error = "Enter a valid 10-digit phone number"
-                    etPhone.requestFocus()
-                }
-                !phone.all { it.isDigit() } -> {
-                    etPhone.error = "Only digits allowed"
+                !UserValidationUtils.isValidPhone(phone) -> {
+                    etPhone.error = "Enter a valid 10-digit mobile number"
                     etPhone.requestFocus()
                 }
                 else -> {
