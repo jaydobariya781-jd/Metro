@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="metro_bg">#F2F4F7</color>
+    <color name="metro_blue">#1A56C4</color>
+    <color name="metro_card_stroke">#E0E0E0</color>
+    <color name="metro_dark_blue">#0F3B8C</color>
+    <color name="metro_green">#2ECC71</color>
+    <color name="metro_light_blue">#EBF2FD</color>
+    <color name="metro_orange">#F39C12</color>
+    <color name="metro_text_dark">#1A1A2E</color>
+    <color name="metro_text_grey">#757575</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">Ahmedabad Metro</string>
+    <style name="Base.Theme.M1" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        
+    </style>
+    <style name="Theme.M1" parent="Base.Theme.M1"/>
+</resources>

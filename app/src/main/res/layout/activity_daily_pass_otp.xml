@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/daily_pass_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- ===== TOP HEADER ===== -->
+    <RelativeLayout
+        android:id="@+id/rl_daily_pass_topbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="12dp"
+        android:background="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Circular Back Button -->
+        <ImageView
+            android:id="@+id/btn_daily_pass_back"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_circle_white"
+            android:src="@drawable/ic_chevron_left"
+            android:contentDescription="Back"
+            android:padding="10dp"
+            android:elevation="2dp"
+            app:tint="#1E293B"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tv_daily_pass_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/btn_daily_pass_back"
+            android:layout_marginStart="14dp"
+            android:layout_centerVertical="true"
+            android:text="Daily Pass"
+            android:textColor="#0F172A"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium" />
+    </RelativeLayout>
+
+    <!-- ===== MAIN CONTENT BODY ===== -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/rl_daily_pass_topbar"
+        app:layout_constraintBottom_toTopOf="@id/card_bottom_nav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="24dp">
+
+            <!-- Hero Icon Box -->
+            <LinearLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_icon_box_slate"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_pass_shield"
+                    android:contentDescription="Pass Shield"
+                    app:tint="#0057B7" />
+            </LinearLayout>
+
+            <!-- Main Heading -->
+            <TextView
+                android:id="@+id/tv_otp_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Enter 6-Digit Code"
+                android:textColor="#0F172A"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium" />
+
+            <!-- Subtitle -->
+            <TextView
+                android:id="@+id/tv_otp_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:text="A 6-digit code has been sent to +91 98*** **123 for your Daily Pass payment of ₹200.00."
+                android:textColor="#64748B"
+                android:textSize="13sp"
+                android:fontFamily="sans-serif" />
+
+            <!-- 6 OTP INPUT BOXES -->
+            <LinearLayout
+                android:id="@+id/ll_otp_boxes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/et_otp_1"
+                    android:layout_width="44dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_otp_box_inactive"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="#0F172A"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+                <EditText
+                    android:id="@+id/et_otp_2"
+                    android:layout_width="44dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_otp_box_inactive"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="#0F172A"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+                <EditText
+                    android:id="@+id/et_otp_3"
+                    android:layout_width="44dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_otp_box_inactive"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="#0F172A"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+                <EditText
+                    android:id="@+id/et_otp_4"
+                    android:layout_width="44dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_otp_box_inactive"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="#0F172A"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+                <EditText
+                    android:id="@+id/et_otp_5"
+                    android:layout_width="44dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_otp_box_inactive"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="#0F172A"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+                <EditText
+                    android:id="@+id/et_otp_6"
+                    android:layout_width="44dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_otp_box_inactive"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="#0F172A"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+            </LinearLayout>
+
+            <!-- OTP ERROR FEEDBACK -->
+            <TextView
+                android:id="@+id/tv_otp_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Please enter a valid 6-digit OTP code"
+                android:textColor="#EF4444"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif-medium"
+                android:visibility="gone" />
+
+            <!-- RESEND OTP SECTION -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:text="Didn't receive the code?"
+                android:textColor="#64748B"
+                android:textSize="13sp"
+                android:fontFamily="sans-serif" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_resend_otp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Resend OTP"
+                    android:textColor="#0057B7"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="|"
+                    android:textColor="#CBD5E1"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_otp_timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:45"
+                    android:textColor="#475569"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+            </LinearLayout>
+
+            <!-- VERIFY & PAY BUTTON -->
+            <Button
+                android:id="@+id/btn_verify_pay_pass"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="36dp"
+                android:background="@drawable/bg_btn_verify_daily_pass"
+                android:text="Verify &amp; Pay &#x20B9;200.00"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:elevation="4dp"
+                android:stateListAnimator="@null" />
+
+            <!-- LEGAL FOOTNOTE -->
+            <TextView
+                android:id="@+id/tv_legal_footnote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:text="By proceeding, you agree to our Terms of Service and Privacy Policy."
+                android:textColor="#94A3B8"
+                android:textSize="11sp"
+                android:fontFamily="sans-serif"
+                android:clickable="true"
+                android:focusable="true" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ===== FLOATING BOTTOM NAVIGATION BAR ===== -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_bottom_nav"
+        android:layout_width="0dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- TAB 1: HOME -->
+            <LinearLayout
+                android:id="@+id/nav_pass_home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_nav_home"
+                    android:contentDescription="Home"
+                    app:tint="#64748B" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Home"
+                    android:textColor="#64748B"
+                    android:textSize="10sp"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <!-- TAB 2: TICKETS -->
+            <LinearLayout
+                android:id="@+id/nav_pass_tickets"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_nav_tickets"
+                    android:contentDescription="Tickets"
+                    app:tint="#64748B" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Tickets"
+                    android:textColor="#64748B"
+                    android:textSize="10sp"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <!-- TAB 3: MAP -->
+            <LinearLayout
+                android:id="@+id/nav_pass_map"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_nav_map"
+                    android:contentDescription="Map"
+                    app:tint="#64748B" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Map"
+                    android:textColor="#64748B"
+                    android:textSize="10sp"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <!-- TAB 4: PROFILE (ACTIVE WITH TOP INDICATOR LINE) -->
+            <LinearLayout
+                android:id="@+id/nav_pass_profile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <!-- Top indicator line -->
+                <View
+                    android:layout_width="36dp"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/bg_indicator_bar_blue" />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_nav_profile"
+                    android:contentDescription="Profile"
+                    app:tint="#0057B7" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Profile"
+                    android:textColor="#0057B7"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
