@@ -66,8 +66,19 @@ class BookingSuccessActivity : AppCompatActivity() {
 
     private fun setupActionButtons(ticketId: String) {
         // Download / Share ticket
-        findViewById<MaterialButton>(R.id.btn_download_ticket)?.setOnClickListener {
-            Toast.makeText(this, "Ticket $ticketId saved to Downloads", Toast.LENGTH_SHORT).show()
+        findViewById<MaterialButton>(R.id.btn_download_ticket)?.apply {
+            setOnClickListener {
+                Toast.makeText(this@BookingSuccessActivity, "Ticket $ticketId saved to device storage", Toast.LENGTH_SHORT).show()
+            }
+            setOnLongClickListener {
+                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_SUBJECT, "Ahmedabad Metro Ticket $ticketId")
+                    putExtra(Intent.EXTRA_TEXT, "Ahmedabad Metro Digital QR Ticket: $ticketId. Keep your QR ready at entry turnstiles.")
+                }
+                startActivity(Intent.createChooser(shareIntent, "Share Metro Ticket"))
+                true
+            }
         }
 
         // View all tickets
