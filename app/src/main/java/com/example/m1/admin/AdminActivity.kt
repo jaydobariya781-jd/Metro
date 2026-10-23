@@ -83,5 +83,11 @@ class AdminActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.nav_admin_settings)?.setOnClickListener {
             startActivity(Intent(this, AdminSettingsActivity::class.java))
         }
+
+        // Long press on brand header opens quick stations manager
+        findViewById<TextView>(R.id.tv_admin_brand)?.setOnLongClickListener {
+            startActivity(Intent(this, AdminStationsActivity::class.java))
+            true
+        }
     }
 }
