@@ -70,7 +70,11 @@ class PaymentActivity : AppCompatActivity() {
     private fun setupMethodCard(viewId: Int, method: String) {
         findViewById<CardView>(viewId)?.setOnClickListener {
             selectedMethod = method
-            Toast.makeText(this, "Selected: $method", Toast.LENGTH_SHORT).show()
+            if (method == "Metro Smart Card") {
+                Toast.makeText(this, "Metro Smart Card Linked • Available Balance: ₹350.00", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Selected: $method", Toast.LENGTH_SHORT).show()
+            }
             // Highlight selected card
             updateSelectedMethodUI(viewId)
         }
