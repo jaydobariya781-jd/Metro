@@ -90,9 +90,9 @@ class VerifyOtpActivity : AppCompatActivity() {
 
     private fun setupVerifyButton() {
         btnVerify.setOnClickListener {
-            val enteredOtp = otpBoxes.joinToString("") { it.text.toString() }
-            // Demo: accept "123456" or any 6-digit OTP
-            if (enteredOtp.length == 6) {
+            val enteredOtp = otpBoxes.joinToString("") { it.text.toString().trim() }
+            // Demo: accept "123456" or any valid 6-digit numeric OTP
+            if (enteredOtp.length == 6 && enteredOtp.all { it.isDigit() }) {
                 TicketManager.setLoggedIn(this, true)
                 Toast.makeText(this, "Verified! Welcome to Ahmedabad Metro.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
@@ -101,7 +101,7 @@ class VerifyOtpActivity : AppCompatActivity() {
                 finish()
             } else {
                 otpBoxes.forEach { it.setBackgroundResource(R.drawable.bg_otp_box_error) }
-                Toast.makeText(this, "Invalid OTP. Please try again.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please enter all 6 digits of your OTP.", Toast.LENGTH_SHORT).show()
             }
         }
 
