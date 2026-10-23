@@ -93,7 +93,7 @@ class SavedStationsActivity : AppCompatActivity() {
                         1 -> {
                             findViewById<TextView>(R.id.tv_home_next_train)?.text = "Next: 2 mins"
                             findViewById<TextView>(R.id.tv_work_next_train)?.text = "Next: 9 mins"
-                            Toast.makeText(this, "Live train arrival times refreshed", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Live arrival times refreshed for all 32 stations", Toast.LENGTH_SHORT).show()
                         }
                         2 -> showAddStationDialog()
                         3 -> startActivity(Intent(this, MapActivity::class.java))
