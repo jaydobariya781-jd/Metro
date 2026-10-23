@@ -140,7 +140,7 @@ class SettingsActivity : AppCompatActivity() {
                     val newName = etName.text.toString().trim()
                     val newPhone = etPhone.text.toString().trim()
 
-                    if (newName.isNotEmpty()) {
+                    if (UserValidationUtils.isValidName(newName)) {
                         userName = newName
                         userPhone = newPhone
                         getSharedPreferences("user_settings_prefs", Context.MODE_PRIVATE)
@@ -151,6 +151,8 @@ class SettingsActivity : AppCompatActivity() {
 
                         tvProfileSub.text = "$userName • $userPhone"
                         Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Please enter a valid full name", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .setNegativeButton("Cancel", null)
