@@ -83,6 +83,10 @@ class PaymentOtpActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.btn_back)?.setOnClickListener {
             finish()
         }
+
+        findViewById<TextView>(R.id.tv_title)?.setOnClickListener {
+            Toast.makeText(this, "256-Bit Encrypted UPI Payment Gateway", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupFareAndSubtitle() {
