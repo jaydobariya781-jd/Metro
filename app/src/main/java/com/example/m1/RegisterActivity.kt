@@ -73,17 +73,17 @@ class RegisterActivity : AppCompatActivity() {
             val email = etEmail.text.toString().trim()
 
             // Final field-level validation with focused error messages
-            if (name.length < 2) {
+            if (!UserValidationUtils.isValidName(name)) {
                 etName.error = "Enter your full name (at least 2 characters)"
                 etName.requestFocus()
                 return@setOnClickListener
             }
-            if (phone.length != 10 || !phone.all { it.isDigit() }) {
+            if (!UserValidationUtils.isValidPhone(phone)) {
                 etPhone.error = "Enter a valid 10-digit mobile number"
                 etPhone.requestFocus()
                 return@setOnClickListener
             }
-            if (email.isNotEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            if (email.isNotEmpty() && !UserValidationUtils.isValidEmail(email)) {
                 etEmail.error = "Enter a valid email address"
                 etEmail.requestFocus()
                 return@setOnClickListener
