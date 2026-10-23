@@ -79,7 +79,7 @@ class DailyPassOtpActivity : AppCompatActivity() {
 
         // Title click
         findViewById<TextView>(R.id.tv_daily_pass_title)?.setOnClickListener {
-            Toast.makeText(this, "Ahmedabad Metro • Daily Commuter Pass (₹200.00)", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Ahmedabad Metro • 24-Hour Unlimited Rides Pass (₹200.00)", Toast.LENGTH_SHORT).show()
         }
     }
 
