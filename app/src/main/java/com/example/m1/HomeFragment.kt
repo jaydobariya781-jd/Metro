@@ -56,7 +56,10 @@ class HomeFragment : Fragment() {
         }
 
         // 2x2 Feature Grid
-        view.findViewById<CardView>(R.id.card_book_ticket)?.setOnClickListener { openBooking() }
+        view.findViewById<CardView>(R.id.card_book_ticket)?.setOnClickListener {
+            Toast.makeText(requireContext(), "Select origin and destination to calculate fare", Toast.LENGTH_SHORT).show()
+            openBooking()
+        }
 
         view.findViewById<CardView>(R.id.card_my_tickets)?.setOnClickListener {
             (activity as? MainActivity)?.selectTab(1)
