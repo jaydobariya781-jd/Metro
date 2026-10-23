@@ -51,7 +51,10 @@ class SearchTrainsActivity : AppCompatActivity() {
         val openBooking = {
             val fromStation = spinnerFrom.selectedItem.toString()
             val toStation = spinnerTo.selectedItem.toString()
-            val intent = Intent(this, BookTicketActivity::class.java)
+            val intent = Intent(this, BookTicketActivity::class.java).apply {
+                putExtra("FROM_STATION", fromStation)
+                putExtra("TO_STATION", toStation)
+            }
             startActivity(intent)
         }
 
