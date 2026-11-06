@@ -33,6 +33,12 @@ class MetroDataTest {
     }
 
     @Test
+    fun testThaltejToVastralGamFare() {
+        val fare = MetroData.calculateFare("Thaltej", "Vastral Gam", 1)
+        assertEquals(30.0, fare, 0.01)
+    }
+
+    @Test
     fun testSameStationFare() {
         val fare = MetroData.calculateFare("Paldi", "Paldi", 1)
         assertEquals(5.0, fare, 0.01)

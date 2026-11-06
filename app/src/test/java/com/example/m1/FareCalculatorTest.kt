@@ -15,7 +15,8 @@ class FareCalculatorTest {
         assertEquals(10.0, FareCalculator.calculateSingleFare(5), 0.01)
         assertEquals(15.0, FareCalculator.calculateSingleFare(8), 0.01)
         assertEquals(20.0, FareCalculator.calculateSingleFare(12), 0.01)
-        assertEquals(25.0, FareCalculator.calculateSingleFare(18), 0.01)
+        assertEquals(25.0, FareCalculator.calculateSingleFare(15), 0.01)
+        assertEquals(30.0, FareCalculator.calculateSingleFare(18), 0.01)
         assertEquals(30.0, FareCalculator.calculateSingleFare(25), 0.01)
     }
 

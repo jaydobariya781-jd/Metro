@@ -2,72 +2,66 @@ package com.example.m1.admin
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
+import com.example.m1.MetroData
 import com.example.m1.R
 
 /**
  * AdminStationsActivity — Alok
  * Admin management screen for metro station data.
- * Displays a list of all stations with line info,
- * options to view details, add, or decommission stations.
+ * Displays all stations with line info, with live add and edit capabilities.
  */
 class AdminStationsActivity : AppCompatActivity() {
 
-    private val stations = listOf(
-        Triple("Thaltej", "Blue Line (E-W)", "Active"),
-        Triple("Gujarat University", "Blue Line (E-W)", "Active"),
-        Triple("Paldi", "Blue Line (E-W)", "Active"),
-        Triple("Gandhigram", "Blue Line (E-W)", "Active"),
-        Triple("Kalupur Railway Station", "Blue Line (E-W)", "Active"),
-        Triple("Old High Court", "Blue Line (E-W)", "Active"),
-        Triple("Vastral Gam", "Blue Line (E-W)", "Active"),
-        Triple("Motera Stadium", "Red Line (N-S)", "Active"),
-        Triple("Sabarmati", "Red Line (N-S)", "Active"),
-        Triple("Ranip", "Red Line (N-S)", "Active"),
-        Triple("APMC", "Red Line (N-S)", "Active"),
-        Triple("Naroda", "Red Line (N-S)", "Active"),
-        Triple("Odhav", "Red Line (N-S)", "Active")
-    )
+    private var stationList: List<Triple<String, String, String>> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_stations)
 
+        MetroData.loadStations(this)
         setupHeader()
         loadStationList()
         setupBottomNav()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadStationList()
     }
 
     private fun setupHeader() {
         findViewById<ImageView>(R.id.btn_stations_back)?.setOnClickListener { finish() }
         findViewById<TextView>(R.id.tv_stations_title)?.text = "Station Management"
 
-        // Total count badge
-        findViewById<TextView>(R.id.tv_stations_count)?.text = "${stations.size} Stations"
-
         // Add station FAB
         findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fab_add_station)?.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Add New Station")
-                .setMessage("Station addition requires system engineering approval.\nPlease submit a request via the Metro Operations Portal.")
-                .setPositiveButton("Request Access", null)
-                .setNegativeButton("Cancel", null)
-                .show()
+            showAddStationDialog()
         }
     }
 
     private fun loadStationList() {
+        val allStationNames = MetroData.getAllStations(this)
+        stationList = allStationNames.map { name ->
+            val line = MetroData.getStationLine(name)
+            Triple(name, line, "Active")
+        }
+
+        findViewById<TextView>(R.id.tv_stations_count)?.text = "${stationList.size} Stations"
+
         val container = findViewById<LinearLayout>(R.id.ll_stations_container) ?: return
         container.removeAllViews()
         val inflater = layoutInflater
 
-        for ((name, line, status) in stations) {
+        for ((name, line, status) in stationList) {
             val card = inflater.inflate(R.layout.item_station_card, container, false)
             card.findViewById<TextView>(R.id.tv_station_name)?.text = name
             card.findViewById<TextView>(R.id.tv_station_line)?.text = line
@@ -83,14 +77,80 @@ class AdminStationsActivity : AppCompatActivity() {
                         "Daily Avg Passengers: ~1,200\n" +
                         "Last Maintenance: 14 Oct 2026"
                     )
-                    .setPositiveButton("View Full Report") { _, _ ->
-                        Toast.makeText(this, "Loading $name station report…", Toast.LENGTH_SHORT).show()
+                    .setPositiveButton("Rename Station") { _, _ ->
+                        showRenameDialog(name)
                     }
                     .setNegativeButton("Close", null)
                     .show()
             }
             container.addView(card)
         }
+    }
+
+    private fun showAddStationDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_admin_add_station, null)
+        val etStationName = dialogView.findViewById<EditText>(R.id.et_new_station_name)
+        val spinnerLine = dialogView.findViewById<Spinner>(R.id.spinner_station_line)
+
+        val lines = listOf("Blue Line (East-West)", "Red Line (North-South)")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, lines)
+        spinnerLine.adapter = adapter
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Add New Metro Station")
+            .setView(dialogView)
+            .setPositiveButton("Save", null)
+            .setNegativeButton("Cancel") { d, _ -> d.dismiss() }
+            .create()
+
+        dialog.setOnShowListener {
+            val saveBtn = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            saveBtn.setOnClickListener {
+                val name = etStationName.text.toString().trim()
+                if (name.length < 2) {
+                    etStationName.error = "Please enter a valid station name"
+                    return@setOnClickListener
+                }
+
+                val selectedLine = spinnerLine.selectedItem.toString()
+                val isAdded = MetroData.addStation(this, name, selectedLine)
+                if (isAdded) {
+                    Toast.makeText(this, "Station '$name' added successfully!", Toast.LENGTH_SHORT).show()
+                    loadStationList()
+                    dialog.dismiss()
+                } else {
+                    etStationName.error = "Station '$name' already exists"
+                    Toast.makeText(this, "Station already exists!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        dialog.show()
+    }
+
+    private fun showRenameDialog(oldName: String) {
+        val input = EditText(this).apply {
+            setText(oldName)
+            setSelection(oldName.length)
+            hint = "New station name"
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Rename Station: $oldName")
+            .setView(input)
+            .setPositiveButton("Save") { _, _ ->
+                val newName = input.text.toString().trim()
+                if (newName.length >= 2 && !newName.equals(oldName, ignoreCase = true)) {
+                    val updated = MetroData.renameStation(this, oldName, newName)
+                    if (updated) {
+                        Toast.makeText(this, "Station renamed to '$newName'", Toast.LENGTH_SHORT).show()
+                        loadStationList()
+                    } else {
+                        Toast.makeText(this, "Station '$newName' already exists", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     private fun setupBottomNav() {

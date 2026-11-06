@@ -2,17 +2,24 @@ package com.example.m1.admin
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import com.example.m1.MetroData
 import com.example.m1.R
 
 /**
  * Admin Panel Activity
  * Dedicated Admin Panel screen matching the requested System Overview design.
+ * Includes station management actions: Add Station & Change Station Name.
  */
 class AdminActivity : AppCompatActivity() {
 
@@ -20,9 +27,12 @@ class AdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_panel)
 
+        MetroData.loadStations(this)
+
         setupHeader()
         setupCards()
         setupTransactions()
+        setupStationButtons()
         setupBottomNav()
     }
 
@@ -69,6 +79,112 @@ class AdminActivity : AppCompatActivity() {
         findViewById<CardView>(R.id.card_trans_2)?.setOnClickListener {
             Toast.makeText(this, "Transaction #AMD20260902: Kabir Mehta • ₹15.00 (PENDING)", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setupStationButtons() {
+        // Button 1: Add Station
+        findViewById<Button>(R.id.btn_admin_add_station)?.setOnClickListener {
+            showAddStationDialog()
+        }
+
+        // Button 2: Change Station Name
+        findViewById<Button>(R.id.btn_admin_change_station_name)?.setOnClickListener {
+            showChangeStationNameDialog()
+        }
+    }
+
+    /**
+     * Dialog to Add a New Metro Station
+     */
+    private fun showAddStationDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_admin_add_station, null)
+        val etStationName = dialogView.findViewById<EditText>(R.id.et_new_station_name)
+        val spinnerLine = dialogView.findViewById<Spinner>(R.id.spinner_station_line)
+
+        val lines = listOf("Blue Line (East-West)", "Red Line (North-South)")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, lines)
+        spinnerLine.adapter = adapter
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Add New Metro Station")
+            .setView(dialogView)
+            .setPositiveButton("Save", null)
+            .setNegativeButton("Cancel") { d, _ -> d.dismiss() }
+            .create()
+
+        dialog.setOnShowListener {
+            val saveBtn = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            saveBtn.setOnClickListener {
+                val name = etStationName.text.toString().trim()
+                if (name.length < 2) {
+                    etStationName.error = "Please enter a valid station name"
+                    return@setOnClickListener
+                }
+
+                val selectedLine = spinnerLine.selectedItem.toString()
+                val isAdded = MetroData.addStation(this, name, selectedLine)
+                if (isAdded) {
+                    Toast.makeText(this, "Station '$name' added successfully!", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                } else {
+                    etStationName.error = "Station '$name' already exists"
+                    Toast.makeText(this, "Station already exists in network!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        dialog.show()
+    }
+
+    /**
+     * Dialog to Change Existing Metro Station Name
+     */
+    private fun showChangeStationNameDialog() {
+        val stations = MetroData.getAllStations(this)
+        if (stations.isEmpty()) {
+            Toast.makeText(this, "No stations available to rename", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val dialogView = layoutInflater.inflate(R.layout.dialog_admin_change_station, null)
+        val spinnerStations = dialogView.findViewById<Spinner>(R.id.spinner_existing_stations)
+        val etNewName = dialogView.findViewById<EditText>(R.id.et_updated_station_name)
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, stations)
+        spinnerStations.adapter = adapter
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Change Station Name")
+            .setView(dialogView)
+            .setPositiveButton("Update", null)
+            .setNegativeButton("Cancel") { d, _ -> d.dismiss() }
+            .create()
+
+        dialog.setOnShowListener {
+            val updateBtn = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            updateBtn.setOnClickListener {
+                val oldName = spinnerStations.selectedItem.toString()
+                val newName = etNewName.text.toString().trim()
+
+                if (newName.length < 2) {
+                    etNewName.error = "Please enter a valid station name"
+                    return@setOnClickListener
+                }
+                if (newName.equals(oldName, ignoreCase = true)) {
+                    etNewName.error = "New name cannot be identical to current name"
+                    return@setOnClickListener
+                }
+
+                val isUpdated = MetroData.renameStation(this, oldName, newName)
+                if (isUpdated) {
+                    Toast.makeText(this, "Station '$oldName' renamed to '$newName'!", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                } else {
+                    etNewName.error = "A station named '$newName' already exists"
+                    Toast.makeText(this, "Station '$newName' already exists in network!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        dialog.show()
     }
 
     private fun setupBottomNav() {

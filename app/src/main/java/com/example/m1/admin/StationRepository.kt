@@ -65,6 +65,24 @@ class StationRepository private constructor(context: Context) {
         }
     }
 
+    fun addStation(name: String, lineName: String): AdminStationModel {
+        val newId = "ST" + String.format("%02d", defaultStations.size + 1)
+        val isInterchange = lineName.contains("Interchange", ignoreCase = true)
+        val color = if (lineName.contains("Red", ignoreCase = true)) "#EF4444" else "#2563EB"
+        val model = AdminStationModel(newId, name, lineName, color, 2, isInterchange)
+        defaultStations.add(model)
+        return model
+    }
+
+    fun renameStation(oldName: String, newName: String): Boolean {
+        val station = defaultStations.find { it.name.equals(oldName, ignoreCase = true) }
+        return if (station != null) {
+            val idx = defaultStations.indexOf(station)
+            defaultStations[idx] = station.copy(name = newName)
+            true
+        } else false
+    }
+
     companion object {
         @Volatile
         private var instance: StationRepository? = null

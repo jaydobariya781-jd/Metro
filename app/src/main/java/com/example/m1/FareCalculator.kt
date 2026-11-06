@@ -10,13 +10,13 @@ object FareCalculator {
     const val RETURN_DISCOUNT_PERCENT = 0.10 // 10% discount on return journeys
 
     /**
-     * Calculate fare based on number of stations travelled
+     * Calculate fare based on number of stations travelled:
      * 1-3 stations: ₹5
      * 4-6 stations: ₹10
      * 7-9 stations: ₹15
-     * 10-14 stations: ₹20
-     * 15-20 stations: ₹25
-     * 20+ stations: ₹30
+     * 10-13 stations: ₹20
+     * 14-16 stations: ₹25
+     * 17+ stations: ₹30 (e.g. Thaltej to Vastral Gam = 17 hops = ₹30)
      */
     fun calculateSingleFare(stationCount: Int): Double {
         return when {
@@ -24,8 +24,8 @@ object FareCalculator {
             stationCount in 2..3 -> 5.0
             stationCount in 4..6 -> 10.0
             stationCount in 7..9 -> 15.0
-            stationCount in 10..14 -> 20.0
-            stationCount in 15..20 -> 25.0
+            stationCount in 10..13 -> 20.0
+            stationCount in 14..16 -> 25.0
             else -> 30.0
         }
     }

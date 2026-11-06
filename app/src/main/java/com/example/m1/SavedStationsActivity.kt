@@ -271,19 +271,7 @@ class SavedStationsActivity : AppCompatActivity() {
             setPadding(50, 30, 50, 10)
         }
 
-        val metroStations = arrayOf(
-            "Thaltej",
-            "Vastral Gam",
-            "Old High Court",
-            "Sabarmati",
-            "Kalupur",
-            "Motera Stadium",
-            "Gandhigram",
-            "Paldi",
-            "Ranip",
-            "AEC",
-            "Kankaria East"
-        )
+        val metroStations = MetroData.getAllStations(this).toTypedArray()
 
         val spinnerStations = Spinner(this).apply {
             adapter = ArrayAdapter(this@SavedStationsActivity, android.R.layout.simple_spinner_dropdown_item, metroStations)
