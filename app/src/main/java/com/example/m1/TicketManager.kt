@@ -28,6 +28,10 @@ object TicketManager {
         getPrefs(context).edit().putBoolean(KEY_LOGGED_IN, value).apply()
     }
 
+    fun logout(context: Context) {
+        getPrefs(context).edit().putBoolean(KEY_LOGGED_IN, false).apply()
+    }
+
     fun getUserPhone(context: Context): String {
         return getPrefs(context).getString(KEY_USER_PHONE, "+91 98765 43210") ?: "+91 98765 43210"
     }
@@ -55,6 +59,16 @@ object TicketManager {
         tickets.removeAll { it.ticketId == ticket.ticketId }
         tickets.add(0, ticket)
         persistTickets(context, tickets)
+
+        // Synchronize with Firebase Firestore database
+        FirebaseDatabaseHelper.saveTestTicket(
+            ticketId = ticket.ticketId,
+            fromStation = ticket.fromStation,
+            toStation = ticket.toStation,
+            fare = ticket.fare,
+            onSuccess = {},
+            onError = {}
+        )
     }
 
     fun addTicket(context: Context, ticket: TicketModel) {

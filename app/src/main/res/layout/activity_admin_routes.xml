@@ -22,7 +22,7 @@
             android:paddingVertical="14dp">
 
             <ImageView
-                android:id="@+id/ivBack"
+                android:id="@+id/btn_routes_back"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:background="@drawable/bg_circle_back_btn"
@@ -40,14 +40,15 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/ivFareMatrix"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_circle_back_btn"
-                android:contentDescription="Fare Matrix"
-                android:padding="8dp"
-                android:src="@drawable/ic_rupee_icon" />
+            <TextView
+                android:id="@+id/tv_routes_export"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Export"
+                android:textColor="#2563EB"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:padding="8dp" />
         </LinearLayout>
 
         <!-- Route Stats Banner -->
@@ -78,6 +79,7 @@
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/tv_routes_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
@@ -108,7 +110,7 @@
 
             <!-- Dynamic Routes Container -->
             <LinearLayout
-                android:id="@+id/llRoutesContainer"
+                android:id="@+id/ll_routes_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />

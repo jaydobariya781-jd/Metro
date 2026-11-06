@@ -3,7 +3,6 @@ package com.example.m1
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -17,20 +16,7 @@ class Onboarding3Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding3)
 
-        // "Login" button
-        findViewById<Button>(R.id.btn_onboarding_login)?.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }
-
-        // "Create Account" button
-        findViewById<Button>(R.id.btn_onboarding_register)?.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
-            finish()
-        }
-
-        // "Skip" / already have account text
-        findViewById<TextView>(R.id.tv_onboarding3_skip)?.setOnClickListener {
+        findViewById<Button>(R.id.btn_get_started)?.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }

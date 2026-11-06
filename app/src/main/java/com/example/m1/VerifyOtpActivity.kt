@@ -42,20 +42,20 @@ class VerifyOtpActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        tvPhoneHint = findViewById(R.id.tv_verify_phone_hint)
-        tvPhoneHint.text = "Enter the 6-digit OTP sent to +91 $phone"
+        tvPhoneHint = findViewById(R.id.tv_phone_number)
+        tvPhoneHint.text = "+91 $phone"
 
-        btnVerify = findViewById(R.id.btn_verify_otp)
-        tvResend = findViewById(R.id.tv_resend_otp)
-        tvTimer = findViewById(R.id.tv_otp_timer)
+        btnVerify = findViewById(R.id.btn_verify)
+        tvResend = findViewById(R.id.tv_resend_label)
+        tvTimer = findViewById(R.id.tv_timer)
 
         otpBoxes = listOf(
-            findViewById(R.id.et_otp_1),
-            findViewById(R.id.et_otp_2),
-            findViewById(R.id.et_otp_3),
-            findViewById(R.id.et_otp_4),
-            findViewById(R.id.et_otp_5),
-            findViewById(R.id.et_otp_6)
+            findViewById(R.id.et_otp1),
+            findViewById(R.id.et_otp2),
+            findViewById(R.id.et_otp3),
+            findViewById(R.id.et_otp4),
+            findViewById(R.id.et_otp5),
+            findViewById(R.id.et_otp6)
         )
     }
 
@@ -94,6 +94,11 @@ class VerifyOtpActivity : AppCompatActivity() {
             // Demo: accept "123456" or any valid 6-digit numeric OTP
             if (enteredOtp.length == 6 && enteredOtp.all { it.isDigit() }) {
                 TicketManager.setLoggedIn(this, true)
+
+                // Save user profile to Firebase Firestore
+                val userName = TicketManager.getUserName(this)
+                FirebaseDatabaseHelper.saveUserProfile(phone = phone, name = userName)
+
                 Toast.makeText(this, "Verified! Welcome to Ahmedabad Metro.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -119,10 +124,10 @@ class VerifyOtpActivity : AppCompatActivity() {
         timer = object : CountDownTimer(60_000L, 1_000L) {
             override fun onTick(millisUntilFinished: Long) {
                 val secs = millisUntilFinished / 1000
-                tvTimer.text = "Resend in ${secs}s"
+                tvTimer.text = "00:${if (secs < 10) "0$secs" else secs}"
             }
             override fun onFinish() {
-                tvTimer.text = ""
+                tvTimer.text = "00:00"
                 tvResend.isEnabled = true
             }
         }.start()

@@ -275,13 +275,13 @@ class DailyPassOtpActivity : AppCompatActivity() {
                 fromStation = "All Metro Stations (Unlimited)",
                 toStation = "All Corridors & Interchanges",
                 passengers = 1,
-                ticketType = "Unlimited Daily Pass",
+                journeyType = "Unlimited Daily Pass",
                 date = "Today",
                 time = currentTime,
                 fare = 200.0,
                 status = "PAID",
                 paymentMethod = "UPI Verified",
-                qrData = qrContent
+                qrPayload = qrContent
             )
 
             TicketManager.saveTicket(this, passTicket)

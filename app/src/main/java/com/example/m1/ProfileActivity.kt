@@ -1,3 +1,4 @@
+
 package com.example.m1
 
 import android.content.Intent
@@ -8,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.m1.admin.AdminActivity
+import com.example.m1.admin.AdminLoginActivity
 
 /**
  * ProfileActivity — Brij Nagvadiya
@@ -63,7 +64,7 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(Intent(this, HelpSupportActivity::class.java))
         }
         findViewById<LinearLayout>(R.id.row_admin_panel)?.setOnClickListener {
-            startActivity(Intent(this, AdminActivity::class.java))
+            startActivity(Intent(this, AdminLoginActivity::class.java))
         }
         findViewById<Button>(R.id.btn_logout)?.setOnClickListener {
             TicketManager.logout(this)
@@ -76,18 +77,18 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNav() {
-        findViewById<LinearLayout>(R.id.nav_user_home)?.setOnClickListener {
+        findViewById<LinearLayout>(R.id.nav_home)?.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java).apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP })
             finish()
         }
-        findViewById<LinearLayout>(R.id.nav_user_tickets)?.setOnClickListener {
+        findViewById<LinearLayout>(R.id.nav_tickets)?.setOnClickListener {
             startActivity(Intent(this, MyTicketsActivity::class.java))
             finish()
         }
-        findViewById<LinearLayout>(R.id.nav_user_map)?.setOnClickListener {
+        findViewById<LinearLayout>(R.id.nav_map)?.setOnClickListener {
             startActivity(Intent(this, MapActivity::class.java))
             finish()
         }
-        findViewById<LinearLayout>(R.id.nav_user_profile)?.setOnClickListener { /* Already here */ }
+        findViewById<LinearLayout>(R.id.nav_profile)?.setOnClickListener { /* Already here */ }
     }
 }

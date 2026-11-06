@@ -13,13 +13,12 @@ import androidx.appcompat.app.AppCompatActivity
 /**
  * RegisterActivity — Jay Dobariya
  * New user registration with real-time field validation.
- * Collects name, phone, and email; then routes to OTP verification.
+ * Collects name and phone; then routes to OTP verification.
  */
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var etName: EditText
     private lateinit var etPhone: EditText
-    private lateinit var etEmail: EditText
     private lateinit var btnRegister: Button
     private lateinit var tvGoToLogin: TextView
 
@@ -33,11 +32,10 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        etName = findViewById(R.id.et_register_name)
-        etPhone = findViewById(R.id.et_register_phone)
-        etEmail = findViewById(R.id.et_register_email)
-        btnRegister = findViewById(R.id.btn_register_submit)
-        tvGoToLogin = findViewById(R.id.tv_go_to_login)
+        etName = findViewById(R.id.et_full_name)
+        etPhone = findViewById(R.id.et_mobile)
+        btnRegister = findViewById(R.id.btn_register)
+        tvGoToLogin = findViewById(R.id.tv_login_link)
     }
 
     private fun setupRealtimeValidation() {
@@ -50,27 +48,23 @@ class RegisterActivity : AppCompatActivity() {
         }
         etName.addTextChangedListener(watcher)
         etPhone.addTextChangedListener(watcher)
-        etEmail.addTextChangedListener(watcher)
     }
 
     private fun validateFields(): Boolean {
         val name = etName.text.toString().trim()
         val phone = etPhone.text.toString().trim()
-        val email = etEmail.text.toString().trim()
 
         val nameOk = name.length >= 2
         val phoneOk = phone.length == 10 && phone.all { it.isDigit() }
-        val emailOk = email.isEmpty() || android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
-        btnRegister.isEnabled = nameOk && phoneOk && emailOk
-        return nameOk && phoneOk && emailOk
+        btnRegister.isEnabled = nameOk && phoneOk
+        return nameOk && phoneOk
     }
 
     private fun setupClickListeners() {
         btnRegister.setOnClickListener {
             val name = etName.text.toString().trim()
             val phone = etPhone.text.toString().trim()
-            val email = etEmail.text.toString().trim()
 
             // Final field-level validation with focused error messages
             if (!UserValidationUtils.isValidName(name)) {
@@ -81,11 +75,6 @@ class RegisterActivity : AppCompatActivity() {
             if (!UserValidationUtils.isValidPhone(phone)) {
                 etPhone.error = "Enter a valid 10-digit mobile number"
                 etPhone.requestFocus()
-                return@setOnClickListener
-            }
-            if (email.isNotEmpty() && !UserValidationUtils.isValidEmail(email)) {
-                etEmail.error = "Enter a valid email address"
-                etEmail.requestFocus()
                 return@setOnClickListener
             }
 

@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.m1.admin.AdminLoginActivity
 
 /**
  * LoginActivity — Jay Dobariya
@@ -32,9 +33,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        etPhone = findViewById(R.id.et_login_phone)
-        btnLogin = findViewById(R.id.btn_login_submit)
-        tvGoToRegister = findViewById(R.id.tv_go_to_register)
+        etPhone = findViewById(R.id.et_phone_number)
+        btnLogin = findViewById(R.id.btn_send_otp)
+        tvGoToRegister = findViewById(R.id.tv_register_link)
     }
 
     private fun setupRealTimeValidation() {
@@ -79,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Admin shortcut — long-press login button
         btnLogin.setOnLongClickListener {
-            startActivity(Intent(this, admin.AdminActivity::class.java))
+            startActivity(Intent(this, AdminLoginActivity::class.java))
             true
         }
     }

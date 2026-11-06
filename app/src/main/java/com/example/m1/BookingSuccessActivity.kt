@@ -3,11 +3,11 @@ package com.example.m1
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
 
 /**
  * BookingSuccessActivity — Brij Nagvadiya
@@ -35,21 +35,23 @@ class BookingSuccessActivity : AppCompatActivity() {
     }
 
     private fun populateTicketDetails(ticket: TicketModel) {
-        findViewById<TextView>(R.id.tv_success_ticket_id)?.text = ticket.ticketId
-        findViewById<TextView>(R.id.tv_success_route)?.text = "${ticket.fromStation} → ${ticket.toStation}"
+        findViewById<TextView>(R.id.tv_booking_ref)?.text = "Ticket ID: ${ticket.ticketId}"
+        findViewById<TextView>(R.id.tv_from_station)?.text = ticket.fromStation
+        findViewById<TextView>(R.id.tv_to_station)?.text = ticket.toStation
         val passengerLabel = if (ticket.passengers == 1) "1 Passenger" else "${ticket.passengers} Passengers"
-        findViewById<TextView>(R.id.tv_success_passengers)?.text = passengerLabel
-        findViewById<TextView>(R.id.tv_success_fare)?.text = "₹${"%.2f".format(ticket.fare)}"
-        findViewById<TextView>(R.id.tv_success_date)?.text = "${ticket.date} • ${ticket.time}"
-        findViewById<TextView>(R.id.tv_success_payment)?.text = ticket.paymentMethod
-        findViewById<TextView>(R.id.tv_success_status)?.text = ticket.status.uppercase()
+        findViewById<TextView>(R.id.tv_passengers)?.text = passengerLabel
+        findViewById<TextView>(R.id.tv_amount_paid)?.text = "₹${"%.2f".format(ticket.fare)}"
+        findViewById<TextView>(R.id.tv_booking_date)?.text = "${ticket.date} • ${ticket.time}"
+        findViewById<TextView>(R.id.tv_passenger_name)?.text = ticket.paymentMethod
+        findViewById<TextView>(R.id.tv_ticket_status_badge)?.text = ticket.status.uppercase()
     }
 
     private fun populateFallback(ticketId: String) {
-        findViewById<TextView>(R.id.tv_success_ticket_id)?.text = ticketId
-        findViewById<TextView>(R.id.tv_success_route)?.text = "Thaltej → Vastral Gam"
-        findViewById<TextView>(R.id.tv_success_fare)?.text = "₹25.00"
-        findViewById<TextView>(R.id.tv_success_status)?.text = "ACTIVE"
+        findViewById<TextView>(R.id.tv_booking_ref)?.text = "Ticket ID: $ticketId"
+        findViewById<TextView>(R.id.tv_from_station)?.text = "Thaltej"
+        findViewById<TextView>(R.id.tv_to_station)?.text = "Vastral Gam"
+        findViewById<TextView>(R.id.tv_amount_paid)?.text = "₹25.00"
+        findViewById<TextView>(R.id.tv_ticket_status_badge)?.text = "ACTIVE"
     }
 
     private fun generateQrCode(ticket: TicketModel) {
@@ -66,7 +68,7 @@ class BookingSuccessActivity : AppCompatActivity() {
 
     private fun setupActionButtons(ticketId: String) {
         // Download / Share ticket
-        findViewById<MaterialButton>(R.id.btn_download_ticket)?.apply {
+        findViewById<View>(R.id.btn_save)?.apply {
             setOnClickListener {
                 Toast.makeText(this@BookingSuccessActivity, "Ticket $ticketId saved to device storage", Toast.LENGTH_SHORT).show()
             }
@@ -82,21 +84,15 @@ class BookingSuccessActivity : AppCompatActivity() {
         }
 
         // View all tickets
-        findViewById<MaterialButton>(R.id.btn_view_tickets)?.setOnClickListener {
+        findViewById<View>(R.id.btn_view_my_tickets)?.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
             finish()
         }
 
-        // Book another ticket
-        findViewById<MaterialButton>(R.id.btn_book_another)?.setOnClickListener {
-            startActivity(Intent(this, BookTicketActivity::class.java))
-            finish()
-        }
-
-        // Back arrow
-        findViewById<ImageView>(R.id.btn_success_back)?.setOnClickListener {
+        // Return to home
+        findViewById<View>(R.id.btn_go_home)?.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)

@@ -2,10 +2,8 @@ package com.example.m1
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import android.view.View
 import android.widget.ImageView
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
@@ -17,40 +15,28 @@ import com.google.android.material.button.MaterialButton
  */
 class SearchTrainsActivity : AppCompatActivity() {
 
-    private lateinit var spinnerFrom: Spinner
-    private lateinit var spinnerTo: Spinner
-    private lateinit var tvResult: TextView
+    private lateinit var tvStartStation: TextView
+    private lateinit var tvEndStation: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_trains)
 
-        spinnerFrom = findViewById(R.id.spinner_search_from)
-        spinnerTo = findViewById(R.id.spinner_search_to)
-        tvResult = findViewById(R.id.tv_search_result)
+        tvStartStation = findViewById(R.id.tv_start_station)
+        tvEndStation = findViewById(R.id.tv_end_station)
 
         setupHeader()
-        setupSpinners()
-        setupSearchButton()
+        setupClickListeners()
     }
 
     private fun setupHeader() {
-        findViewById<ImageView>(R.id.btn_search_back)?.setOnClickListener { finish() }
+        findViewById<ImageView>(R.id.btn_back)?.setOnClickListener { finish() }
     }
 
-    private fun setupSpinners() {
-        val stations = MetroData.allStations
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, stations)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerFrom.adapter = adapter
-        spinnerTo.adapter = adapter
-        spinnerTo.setSelection(8)
-    }
-
-    private fun setupSearchButton() {
+    private fun setupClickListeners() {
         val openBooking = {
-            val fromStation = spinnerFrom.selectedItem.toString()
-            val toStation = spinnerTo.selectedItem.toString()
+            val fromStation = tvStartStation.text.toString()
+            val toStation = tvEndStation.text.toString()
             val intent = Intent(this, BookTicketActivity::class.java).apply {
                 putExtra("FROM_STATION", fromStation)
                 putExtra("TO_STATION", toStation)
@@ -58,20 +44,14 @@ class SearchTrainsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        findViewById<MaterialButton>(R.id.btn_search_trains)?.setOnClickListener {
-            val from = spinnerFrom.selectedItem.toString()
-            val to = spinnerTo.selectedItem.toString()
-            if (from == to) {
-                tvResult.text = "⚠ Please select different stations"
-                return@setOnClickListener
-            }
-            val fare = MetroData.calculateFare(from, to, 1)
-            val line = MetroData.getStationLine(from)
-            tvResult.text = "Route: $from → $to\nLine: $line\nEstimated Fare: ₹${"%.2f".format(fare)}\nEstimated Time: ~${(fare * 1.2).toInt()} mins"
+        findViewById<ImageView>(R.id.btn_swap)?.setOnClickListener {
+            val temp = tvStartStation.text
+            tvStartStation.text = tvEndStation.text
+            tvEndStation.text = temp
         }
 
-        findViewById<MaterialButton>(R.id.btn_book_from_search)?.setOnClickListener {
-            openBooking()
-        }
+        findViewById<MaterialButton>(R.id.btn_book1)?.setOnClickListener { openBooking() }
+        findViewById<MaterialButton>(R.id.btn_book2)?.setOnClickListener { openBooking() }
+        findViewById<View>(R.id.btn_pay_now)?.setOnClickListener { openBooking() }
     }
 }

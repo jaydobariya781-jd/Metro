@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import com.google.android.material.button.MaterialButton
 
 /**
  * BookTicketActivity — Brij Nagvadiya
@@ -27,9 +26,9 @@ class BookTicketActivity : AppCompatActivity() {
     private lateinit var spinnerTo: Spinner
     private lateinit var tvPassengerCount: TextView
     private lateinit var tvFareAmount: TextView
-    private lateinit var btnMinus: MaterialButton
-    private lateinit var btnPlus: MaterialButton
-    private lateinit var btnProceedToPayment: MaterialButton
+    private lateinit var btnMinus: ImageView
+    private lateinit var btnPlus: ImageView
+    private lateinit var btnProceedToPayment: Button
     private lateinit var tvDistance: TextView
 
     private var passengerCount = 1
@@ -48,18 +47,18 @@ class BookTicketActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        spinnerFrom = findViewById(R.id.spinner_from_station)
-        spinnerTo = findViewById(R.id.spinner_to_station)
+        spinnerFrom = findViewById(R.id.spinner_from)
+        spinnerTo = findViewById(R.id.spinner_to)
         tvPassengerCount = findViewById(R.id.tv_passenger_count)
-        tvFareAmount = findViewById(R.id.tv_fare_amount)
-        btnMinus = findViewById(R.id.btn_passenger_minus)
-        btnPlus = findViewById(R.id.btn_passenger_plus)
+        tvFareAmount = findViewById(R.id.tv_total_fare)
+        btnMinus = findViewById(R.id.btn_minus_passenger)
+        btnPlus = findViewById(R.id.btn_plus_passenger)
         btnProceedToPayment = findViewById(R.id.btn_proceed_payment)
-        tvDistance = findViewById(R.id.tv_route_distance)
+        tvDistance = findViewById(R.id.tv_fare_breakdown_label)
     }
 
     private fun setupHeader() {
-        findViewById<ImageView>(R.id.btn_book_back)?.setOnClickListener { finish() }
+        findViewById<ImageView>(R.id.btn_back)?.setOnClickListener { finish() }
     }
 
     private fun setupSpinners() {
@@ -122,13 +121,13 @@ class BookTicketActivity : AppCompatActivity() {
         if (fromStation == toStation) {
             val minFare = 5.0 * passengerCount
             tvFareAmount.text = "₹${"%.2f".format(minFare)}"
-            tvDistance?.text = "Same station (Platform pass)"
+            tvDistance.text = "Same station (Platform pass)"
             return
         }
         val fare = MetroData.calculateFare(fromStation, toStation, passengerCount)
         tvFareAmount.text = "₹${"%.2f".format(fare)}"
         val line = MetroData.getStationLine(fromStation)
-        tvDistance?.text = line
+        tvDistance.text = "Base Fare ($passengerCount Passenger${if (passengerCount > 1) "s" else ""})"
     }
 
     private fun setupProceedButton() {

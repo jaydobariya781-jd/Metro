@@ -2,6 +2,7 @@ package com.example.m1
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -29,23 +30,23 @@ class OnboardingActivity : AppCompatActivity() {
 
     private fun renderSlide() {
         val (title, desc, imgRes) = slides[currentSlide]
-        findViewById<TextView>(R.id.tv_onboarding_title)?.text = title
-        findViewById<TextView>(R.id.tv_onboarding_desc)?.text = desc
+        findViewById<TextView>(R.id.tv_title)?.text = title
+        findViewById<TextView>(R.id.tv_description)?.text = desc
         findViewById<ImageView>(R.id.iv_onboarding_image)?.setImageResource(imgRes)
 
         // Update dot indicators
-        val dot1 = findViewById<ImageView>(R.id.dot_1)
-        val dot2 = findViewById<ImageView>(R.id.dot_2)
-        dot1?.setImageResource(if (currentSlide == 0) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive)
-        dot2?.setImageResource(if (currentSlide == 1) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive)
+        val dot1 = findViewById<View>(R.id.dot_1)
+        val dot3 = findViewById<View>(R.id.dot_3)
+        dot1?.setBackgroundResource(if (currentSlide == 0) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive)
+        dot3?.setBackgroundResource(if (currentSlide == 1) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive)
 
         // Button label
         val isLast = currentSlide == slides.lastIndex
-        findViewById<Button>(R.id.btn_onboarding_next)?.text = if (isLast) "Get Started" else "Next →"
+        findViewById<Button>(R.id.btn_next)?.text = if (isLast) "Get Started" else "Next →"
     }
 
     private fun setupClickListeners() {
-        findViewById<Button>(R.id.btn_onboarding_next)?.setOnClickListener {
+        findViewById<Button>(R.id.btn_next)?.setOnClickListener {
             if (currentSlide < slides.lastIndex) {
                 currentSlide++
                 renderSlide()
@@ -53,7 +54,7 @@ class OnboardingActivity : AppCompatActivity() {
                 startActivity(Intent(this, Onboarding3Activity::class.java))
             }
         }
-        findViewById<TextView>(R.id.tv_onboarding_skip)?.setOnClickListener {
+        findViewById<TextView>(R.id.tv_skip)?.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }

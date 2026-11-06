@@ -280,13 +280,13 @@ class PaymentOtpActivity : AppCompatActivity() {
                 fromStation = fromStation,
                 toStation = toStation,
                 passengers = passengers,
-                ticketType = journeyType,
+                journeyType = journeyType,
                 date = date,
                 time = currentTime,
                 fare = fare,
                 status = "PAID",
                 paymentMethod = "UPI / OTP Verified",
-                qrData = qrContent
+                qrPayload = qrContent
             )
 
             TicketManager.saveTicket(this, ticket)

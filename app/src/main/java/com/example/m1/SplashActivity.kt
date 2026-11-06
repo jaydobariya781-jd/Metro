@@ -22,19 +22,17 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Animate logo and tagline with a smooth fade-in
-        val ivLogo = findViewById<ImageView>(R.id.iv_splash_logo)
-        val tvTagline = findViewById<TextView>(R.id.tv_splash_tagline)
-        val tvVersion = findViewById<TextView>(R.id.tv_splash_version)
+        val ivLogo = findViewById<ImageView>(R.id.iv_metro_icon)
+        val tvAhmedabad = findViewById<TextView>(R.id.tv_ahmedabad)
+        val tvMetro = findViewById<TextView>(R.id.tv_metro)
 
         val fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in).apply {
             duration = 900
         }
         ivLogo?.startAnimation(fadeIn)
-        tvTagline?.startAnimation(fadeIn)
-        tvVersion?.startAnimation(fadeIn)
+        tvAhmedabad?.startAnimation(fadeIn)
+        tvMetro?.startAnimation(fadeIn)
 
-        // Route after 2200ms — to Onboarding if first-time, else directly to home
         Handler(Looper.getMainLooper()).postDelayed({
             val destination = if (TicketManager.isLoggedIn(this)) {
                 Intent(this, MainActivity::class.java)
